@@ -46,9 +46,7 @@ button {
   cursor: pointer;
   transition: border-color 0.25s;
 }
-button:hover {
-  border-color: #646cff;
-}
+
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
@@ -65,4 +63,88 @@ button:focus-visible {
   button {
     background-color: #f9f9f9;
   }
+}
+
+h1 {
+  color: orange;
+}
+
+.header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.categoryCard {
+  border: solid 1px;
+  border-color: white;
+  border-radius: 12px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  margin: 10px;
+  margin-bottom: 50px;
+  padding: 5px;
+  align-items: flex-start;
+}
+
+.categoryCard h3 {
+  color: orange;
+  margin: 10px;
+}
+
+.productsHolder {
+  display: flex;
+  flex-direction: row;
+  margin: 5px;
+  justify-items: center;
+}
+
+.productsHolder h3 {
+  margin: 0px;
+}
+
+.productsHolder h4 {
+  margin: 0px;
+  font-size: 25px;
+}
+
+.productCard {
+  display: flex;
+  flex-direction: column;
+  border: solid 1px;
+  border-radius: 10px;
+  border-color: gre;
+  margin: 16px;
+  padding: 12px;
+}
+
+.productCard img {
+  border-radius: 10px;
+  margin-bottom: 5px;
+}
+
+.productCard button {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  background-color: rgb(92, 64, 13);
+  color: orange;
+}
+
+.productCard button:hover {
+  color: rgb(92, 64, 13);
+  background-color: orange;
+}
+
+.productCard .meta {
+  align-self: center;
+  display: flex;
+  flex-direction: row;
+}
+
+.productCard .meta span {
+  margin-inline: 5px;
 }

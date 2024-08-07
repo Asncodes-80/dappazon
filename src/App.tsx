@@ -4,24 +4,11 @@ import React from "react";
 import "./App.css";
 import Dappazon from "../artifacts/contracts/Dappazon.sol/Dappazon.json";
 import config from "./config.json";
-
-interface Product {
-  id: number;
-  name: string;
-  category: string;
-  image: string;
-  cost: any;
-  rating: number;
-  stock: number;
-}
-
-interface ProductCategory {
-  electronics: Product[];
-  clothing: Product[];
-  toys: Product[];
-}
+import { ProductCategory } from "./interfaces";
+import ProductView from "./components/Product";
 
 function App() {
+  const wineth = (window as any).ethereum;
   const [account, setAccount] = React.useState<string>("");
   const [provider, setProvider] =
     React.useState<ethers.providers.Web3Provider>();
@@ -33,17 +20,17 @@ function App() {
     toys: [],
   });
 
-  const loadBlockchainData = async () => {
-    const accounts = await window.ethereum.request({
+  const connectToWallet = async () => {
+    const accounts = await wineth.request({
       method: "eth_requestAccounts",
     });
     setAccount(ethers.utils.getAddress(accounts[0]));
   };
 
   const loadProducts = async () => {
-    // Connect to Blockchain
+    // Connect to blockchain with wallet intermediation.
     const provider: ethers.providers.Web3Provider =
-      new ethers.providers.Web3Provider(window.ethereum);
+      new ethers.providers.Web3Provider(wineth);
     setProvider(provider);
     // const network: ethers.providers.Network = await provider.getNetwork();
 
@@ -68,57 +55,32 @@ function App() {
   };
 
   React.useEffect(() => {
+    connectToWallet();
     loadProducts();
   }, []);
 
-  console.log();
-
   return (
-    <>
-      <h1>Dappazon</h1>
-      <h5>{account}</h5>
-      <button onClick={() => loadBlockchainData()}>Connect</button>
+    <React.Fragment>
+      <div className="header">
+        <h1>Dappazon</h1>
+        <h5>{account}</h5>
+        <button onClick={() => connectToWallet()}>Connect</button>
+      </div>
 
-      <h2>Products</h2>
-      <ProductViewer products={products} category="electronics" />
-      <ProductViewer products={products} category="clothing" />
-      <ProductViewer products={products} category="toys" />
-    </>
+      {["clothing", "electronics", "toys"].map(
+        (item: string, index: number) => (
+          <ProductView
+            key={index}
+            products={products}
+            category={item as keyof ProductCategory}
+            account={account}
+            provider={provider}
+            dappazon={dappazon}
+          />
+        )
+      )}
+    </React.Fragment>
   );
 }
-
-const ProductViewer = ({
-  category,
-  products,
-}: {
-  products: ProductCategory;
-  category: keyof ProductCategory;
-}): JSX.Element => {
-  return (
-    <div>
-      <h3>
-        {category.charAt(0).toUpperCase()}
-        {category.substring(1)}
-      </h3>
-      {products[category].map((item: Product) => (
-        <div>
-          <img
-            src={item.image}
-            alt={`image of ${item.name} product id: #${item.id}`}
-          />
-          <p>{String(item.id)}</p>
-          <h3>{item.name}</h3>
-          <h4>
-            Price:
-            {ethers.utils.formatUnits(item.cost.toString(), "ether")} ETH
-          </h4>
-          <span>
-            Remaining:{String(item.stock)} - Rate: {String(item.rating)}/5
-          </span>
-        </div>
-      ))}
-    </div>
-  );
-};
 
 export default App;

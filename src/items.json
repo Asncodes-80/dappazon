@@ -13,8 +13,7 @@
       "id": 2,
       "name": "Drone",
       "category": "electronics",
-      "image": "https://ipfs.io/ipfs/QmTYEboq8raiBs7GTUg2yLXB3PMz6HuBNgNfSZBx5Msztg/drone.jpg",
-      "price": "2",
+      "image": "https://ipfs.io/ipfs/QmTYEboq8raiBs7GTUg2yLXB3PMz6HuBNgNfSZBx5Msztg/drone.jpg",      "price": "2",
       "rating": 5,
       "stock": 6
     },

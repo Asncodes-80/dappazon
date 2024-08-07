@@ -2,7 +2,7 @@
   "name": "dappazon",
   "version": "1.0.0",
   "private": true,
-  "type": "module",
+  "type": "commonjs",
   "scripts": {
     "test": "npx vitest",
     "dev": "vite",
